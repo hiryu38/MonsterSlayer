@@ -1,53 +1,67 @@
 <!DOCTYPE html>
 <html>
-<head>
+
+  <head>
     <title>Vue Monster Slayer</title>
     <script src="https://npmcdn.com/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="css/foundation.min.css">
     <link rel="stylesheet" href="css/app.css">
-</head>
-<body>
-<div id="app">
-    <section class="row">
-        <div class="small-6 columns">
-            <h1 class="text-center">YOU</h1>
-            <div class="healthbar">
-                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+    <link rel="shortcut icon" href="img\baseline-videogame_asset-24px.png">
+    <link rel="icon" type="image/svg+xml" href="img\baseline-videogame_asset-24px.svg" sizes="any">
+  </head>
 
-                </div>
+  <body>
+    <div id="app">
+      <section class="row">
+        <div class="small-6 columns">
+          <img src="img\pipo-enemy041.png" />
+          <h1 class="text-center">YOU</h1>
+          <div class="healthbar">
+            <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="heroHealth">
+              {{heroHP}}
             </div>
+          </div>
         </div>
         <div class="small-6 columns">
-            <h1 class="text-center">MONSTER</h1>
-            <div class="healthbar">
-                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
-
-                </div>
+          <img src="img\pipo-enemy021.png" />
+          <h1 class="text-center">MONSTER</h1>
+          <div class="healthbar">
+            <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="monsterHealth">
+              {{monsterHP}}
             </div>
+          </div>
         </div>
-    </section>
-    <section class="row controls">
+      </section>
+      <section v-if="!game" class="row controls">
         <div class="small-12 columns">
-            <button id="start-game">START NEW GAME</button>
+          <button id="start-game" @click="startGame()">START NEW GAME</button>
         </div>
-    </section>
-    <section class="row controls">
-        <div class="small-12 columns">
-            <button id="attack">ATTACK</button>
-            <button id="special-attack">SPECIAL ATTACK</button>
-            <button id="heal">HEAL</button>
-            <button id="give-up">GIVE UP</button>
-        </div>
-    </section>
-    <section class="row log">
-        <div class="small-12 columns">
+      </section>
+      <template v-else>
+        <section class="row controls">
+          <div class="small-12 ">
+            <div class="small-3 columns text-center">
+
+              <button id="attack" @click="attack()"><img src="img\icon001.png" />ATTACK</button>
+            </div>
+
+            <div class="small-4 columns text-center"><button id="special-attack" @click="specialAttack()"><img src="img\icon003.png" />SPECIAL ATTACK</button></div>
+            <div class="small-2 columns text-center"><button id="heal" @click="heal()"><img src="img\icon006.png" />HEAL</button></div>
+            <div class="small-3 columns text-center"><button id="give-up" @click="game = !game"><img src="img\icon013.png" />GIVE UP</button></div>
+          </div>
+        </section>
+        <section class="row log">
+          <div class="small-12 columns">
             <ul>
-                <li>
-
-                </li>
+              <li v-for="(log,idx) in gameLog" :class="{'player-turn' : idx%2 ==0 , 'monster-turn' : idx%2 !=0}">
+                {{log}}
+              </li>
             </ul>
-        </div>
-    </section>
-</div>
-</body>
+          </div>
+        </section>
+      </template>
+    </div>
+  </body>
+  <script src="js/app.js"></script>
+
 </html>
