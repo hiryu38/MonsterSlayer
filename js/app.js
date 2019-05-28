@@ -55,7 +55,7 @@ new Vue({
       } else {
         message = character + "s " + action + ": " + value + " HP Damage";
       }
-      this.gameLog.push(message);
+      this.gameLog.unshift(message);
     }
   },
   computed: {
